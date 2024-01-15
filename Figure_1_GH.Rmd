@@ -10,7 +10,7 @@ output:
   pdf_document:
     toc: yes
     toc_depth: '5'
-subtitle: Version 1.0.0
+subtitle: Version 1.1.0
 ---
 
 # 1. Load Libraries
@@ -18,8 +18,6 @@ subtitle: Version 1.0.0
 ```{r echo=FALSE, warning=FALSE}
 # Data handling + basic calculations
 library(tidyverse)
-library(mvtnorm)
-library(MASS)
 
 # Visualization
 library(patchwork)
@@ -37,24 +35,10 @@ load("../Results/freq1_top_Sz_DSM.RData")
 load("../Results/freq1_top_GAD7.RData") 
 ```
 
-# 3. Set Themes
+# 3. Set Theme
 
 ```{r}
-# Theme for Figure 1A
-Theme_Figure_1a <- 
-  theme(
-    plot.title = element_text(size=12),
-    axis.title.y = element_text(size=9, margin = margin(t = 0, r = 0, b = 0, l = 0)),
-    axis.text.x = element_blank(),
-    axis.text.y = element_text(size=9, color = "black", margin = margin(t = 0, r = 0, b = 0, l = 5)),
-    axis.ticks = element_blank(),
-    panel.grid.major.x = element_blank(), 
-    panel.grid.major.y = element_line(size=.2, color="black" ), 
-    panel.grid.minor.y = element_blank(), 
-    panel.border = element_rect(colour = "black", fill=NA, size=1),
-    panel.background = element_rect(fill = "white"))
-
-# Theme for Figure 1B-D
+# Theme
 Theme_Figure_1b <- 
   theme(
     plot.title = element_text(size=12),
@@ -84,8 +68,9 @@ A1 <- ggplot(filtered_probs, aes(x = reorder(Abbreviation, -Mean_Probability), y
                 width = 0.25) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   labs(title = "Simulation", x = NULL, y = "Probability") + 
-  theme(legend.position = "none") +  
-  Theme_Figure_1a
+  theme(legend.position = "none") +
+  theme_minimal() + 
+  Theme_Figure_1b
 ```
 
 ## Figure 1: B1-B4
@@ -127,7 +112,7 @@ freq1_top_PANSS_color_top <- freq1_top_Sz_DSM %>%
   top_n(n=50) %>% 
   mutate(color = "#F97134")
 
-B3 <- ggplot(freq1_top_PANSS_color_top, aes(x=as.factor(1:nrow(freq1_top_PANSS_color_top)),y=freq)) +
+B3 <- ggplot(freq1_top_PANSS_color_top, aes(x=as.factor(1:nrow(freq1_top_PANSS_color_top)),y=freq)) + #ADJUST!!!
   geom_bar(stat = "identity",fill = freq1_top_PANSS_color_top$color) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   xlab(" ") + 
