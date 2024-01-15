@@ -1,6 +1,6 @@
 ---
 title: PANSS - DSM-5
-subtitle: Version 1.0.0
+subtitle: Version 1.1.0
 author:
 - <h5 style="font-style:italic"> Tobias R. Spiller
 - <h5 style="font-style:italic"> Or Duek
@@ -39,7 +39,7 @@ library(PsychPower)
 
 ```{r PANSS import data, message=FALSE, warning=TRUE, echo = FALSE}
 # Import data
-df <- read.csv("../RRaw_data/pnass01.csv")
+df <- read.csv("~/Desktop/Symptom_count/Revision/Analysis_10_23/Raw_data/pnass01.csv")
 
 df$Age <- as.numeric(df$interview_age) / 10 # change age variable accordingly
 
@@ -94,6 +94,7 @@ Second, we define the diagnosis
 
 ```{r PANSS Dx, echo=TRUE, message=FALSE, warning=TRUE}
 data_SZ_II <- data_SZ_II %>%
+  rowwise() %>% 
   mutate(
     # Defin Dx
     PANSS_SZ_II_DX = (
@@ -244,7 +245,7 @@ desc_pheno
 
 10 Most common combinations
 ```{r PANSS Describe 10 most, echo=FALSE, message=FALSE}
-PsychPower::common_pheno(data_frequency, frequency = "freq", n_phenotypes = 10)
+PsychPower::common_pheno(data_frequency, frequency = "freq", n_phenotypes = 27)
 ```
 
 Combinations (N, %) reported by less or equal than in 1% of the individuals
